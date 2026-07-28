@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KUJU</title>
+<meta name="description" content="KUJU — projects, links and ways to support my work.">
+<meta name="theme-color" content="#0b0d10">
+
+<link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta property="og:title" content="KUJU">
+<meta property="og:description" content="Projects, links and ways to support my work.">
+<meta property="og:image" content="assets/icon-512.png">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ปุ่มสลับภาษา / ธีม -->
+  <div class="topbar">
+    <button class="chip" id="langBtn" type="button" aria-label="Switch language">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18a15 15 0 010-18"/>
+      </svg>
+      <span id="langLabel">ไทย</span>
+    </button>
+    <button class="chip" id="themeBtn" type="button" aria-label="Switch theme">
+      <span id="themeIcon">🌙</span><span id="themeLabel">Dark</span>
+    </button>
+  </div>
+
+  <!-- หัวเว็บ -->
+  <header class="hero fade">
+    <img class="logo" src="assets/logo.png" alt="KUJU logo">
+    <h1 data-t="title">Buy me a coffee</h1>
+    <p data-t="sub"></p>
+  </header>
+
+  <!-- 1. ช่องทางติดตาม -->
+  <section class="section fade" style="animation-delay:.05s">
+    <h2 data-t="social">Where to find me</h2>
+    <div class="list" id="list-social"></div>
+  </section>
+
+  <!-- 2. ผลงาน -->
+  <section class="section fade" style="animation-delay:.1s">
+    <h2 data-t="works">Stuff I've made</h2>
+    <div class="list grid" id="list-works"></div>
+  </section>
+
+  <!-- 3. สนับสนุน -->
+  <section class="section fade" style="animation-delay:.15s">
+    <h2 data-t="donate">Ways to chip in</h2>
+    <div class="donate-body">
+
+      <div class="qr">
+        <span class="label" data-t="qrTitle">PromptPay</span>
+        <img id="qr-img" src="assets/promptpay-card.png" alt="Thai QR Payment / PromptPay code for KUJU">
+        <p class="note" data-t="qrNote"></p>
+        <button class="chip" id="qr-save" type="button" data-t="qrSave">Save QR image</button>
+      </div>
+
+      <div class="online">
+        <span class="label" data-t="orOnline">Or from anywhere</span>
+        <div class="list" id="list-donate"></div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span data-t="thanks"></span><br>
+  © <span id="year"></span> KUJU
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<noscript>
+  <p style="text-align:center;padding:0 20px 40px">
+    This page needs JavaScript to show the links. ·
+    หน้านี้ต้องเปิด JavaScript เพื่อแสดงลิงก์
+  </p>
+</noscript>
+
+<!-- ลำดับสำคัญ: data และ i18n ต้องมาก่อน main -->
+<script src="js/icons.js"></script>
+<script src="js/data.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

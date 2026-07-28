@@ -1,0 +1,164 @@
+/* ============================================================
+   style.css — หน้าตาทั้งหมดของเว็บ
+   สีหลักอยู่ในบล็อก :root ข้างล่าง แก้ที่นั่นจุดเดียวเปลี่ยนทั้งเว็บ
+   ============================================================ */
+
+/* --- 1. ตัวแปรสี ----------------------------------------- */
+:root{
+  --bg:#0b0d10;
+  --card:rgba(255,255,255,.04);
+  --card-brd:rgba(255,255,255,.09);
+  --tile:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0));
+  --fg:#f2f4f7;
+  --muted:#9aa4b2;
+  --ring:rgba(255,255,255,.16);
+  --shadow:0 20px 50px -20px rgba(0,0,0,.8);
+  --radius:18px;
+  --radius-sm:14px;
+}
+html[data-theme="light"]{
+  --bg:#f6f7f9;
+  --card:rgba(255,255,255,.9);
+  --card-brd:rgba(10,15,25,.09);
+  --tile:#ffffff;
+  --fg:#0d1117;
+  --muted:#5b6472;
+  --ring:rgba(10,15,25,.14);
+  --shadow:0 20px 45px -22px rgba(15,23,42,.35);
+}
+
+/* --- 2. พื้นฐาน ------------------------------------------- */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:"Inter","Noto Sans Thai",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.55;
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+  transition:background .3s ease,color .3s ease;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(60rem 40rem at 12% -10%, rgba(120,160,255,.16), transparent 60%),
+    radial-gradient(50rem 35rem at 95% 5%, rgba(180,120,255,.13), transparent 60%),
+    radial-gradient(45rem 35rem at 50% 110%, rgba(80,220,190,.10), transparent 60%);
+}
+html[data-theme="light"] body::before{
+  background:
+    radial-gradient(60rem 40rem at 12% -10%, rgba(90,120,255,.13), transparent 60%),
+    radial-gradient(50rem 35rem at 95% 5%, rgba(160,110,255,.10), transparent 60%),
+    radial-gradient(45rem 35rem at 50% 110%, rgba(40,200,170,.10), transparent 60%);
+}
+a{color:inherit}
+
+.wrap{width:100%;max-width:720px;margin:0 auto;padding:20px 20px 40px;flex:1}
+
+/* --- 3. แถบปุ่มด้านบน ------------------------------------ */
+.topbar{display:flex;justify-content:flex-end;gap:8px;padding:6px 0 22px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  background:var(--card);border:1px solid var(--card-brd);color:var(--fg);
+  border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;font-weight:600;
+  backdrop-filter:blur(10px);
+  transition:transform .15s,border-color .2s,background .2s;
+}
+.chip:hover{transform:translateY(-1px);border-color:var(--ring)}
+.chip:active{transform:translateY(0)}
+.chip svg{width:15px;height:15px;opacity:.8}
+
+/* --- 4. หัวเว็บ ------------------------------------------- */
+.hero{text-align:center;padding:8px 0 32px}
+.hero .logo{
+  width:108px;height:108px;object-fit:cover;border-radius:26px;
+  border:1px solid var(--card-brd);box-shadow:var(--shadow);
+  display:block;margin:0 auto 20px;
+}
+.hero h1{
+  font-size:clamp(27px,6.6vw,37px);line-height:1.2;margin:0 0 12px;
+  letter-spacing:-.02em;font-weight:700;
+}
+.hero p{color:var(--muted);font-size:15.5px;margin:0 auto;max-width:52ch}
+
+/* --- 5. การ์ดแต่ละส่วน ----------------------------------- */
+.section{
+  background:var(--card);border:1px solid var(--card-brd);border-radius:var(--radius);
+  backdrop-filter:blur(14px);box-shadow:var(--shadow);
+  padding:20px;margin-bottom:16px;
+}
+.section > h2{
+  font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin:0 0 14px;font-weight:600;
+}
+
+/* --- 6. รายการลิงก์ --------------------------------------- */
+.list{display:flex;flex-direction:column;gap:10px}
+.list.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:600px){ .list.grid{grid-template-columns:1fr} }
+
+.item{
+  display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--fg);
+  border:1px solid var(--card-brd);border-radius:var(--radius-sm);padding:14px 16px;
+  background:var(--tile);
+  transition:transform .16s cubic-bezier(.2,.8,.2,1),border-color .2s,background .2s;
+}
+.item:hover{transform:translateY(-2px);border-color:var(--ring)}
+.item:focus-visible{outline:2px solid #6ea8fe;outline-offset:2px}
+
+.item .icon{
+  width:40px;height:40px;flex:none;border-radius:11px;
+  display:grid;place-items:center;
+}
+.item .icon svg{width:21px;height:21px;fill:currentColor}
+
+.item .text{min-width:0;flex:1}
+.item .text b{display:block;font-size:15px;font-weight:600;line-height:1.35}
+.item .text span{
+  display:block;font-size:12.5px;color:var(--muted);line-height:1.4;margin-top:2px;
+}
+.item .go{margin-left:auto;color:var(--muted);flex:none;opacity:.7}
+.item .go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* ให้การ์ดผลงานสูงเท่ากันในโหมด grid */
+.list.grid .item{align-items:flex-start}
+.list.grid .item .go{align-self:center}
+
+/* --- 7. ส่วนบริจาค --------------------------------------- */
+.donate-body{display:grid;grid-template-columns:250px 1fr;gap:22px;align-items:start}
+@media (max-width:620px){ .donate-body{grid-template-columns:1fr} }
+
+.qr{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.qr img{
+  width:100%;max-width:250px;border-radius:16px;display:block;
+  box-shadow:0 12px 30px -14px rgba(0,0,0,.55);
+}
+.qr .label{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:600}
+.qr .note{font-size:12.5px;color:var(--muted);margin:0;max-width:30ch}
+.qr .chip{width:100%;justify-content:center}
+
+.online{display:flex;flex-direction:column;gap:10px}
+.online > .label{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-bottom:2px}
+
+/* --- 8. ท้ายเว็บ ----------------------------------------- */
+footer{text-align:center;color:var(--muted);font-size:13px;padding:8px 20px 32px}
+
+/* --- 9. อนิเมชัน ----------------------------------------- */
+.fade{animation:fade .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* --- 10. ข้อความแจ้งเตือนเล็กๆ (toast) ------------------- */
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+  background:var(--fg);color:var(--bg);
+  padding:10px 18px;border-radius:999px;font-size:13px;font-weight:600;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:50;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
