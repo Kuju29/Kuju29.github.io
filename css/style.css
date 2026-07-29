@@ -41,18 +41,47 @@ body{
   flex-direction:column;
   transition:background .3s ease,color .3s ease;
 }
+/* ม่านสีบางๆ ทับรูปพื้นหลัง ให้ตัวหนังสืออ่านออกทุกธีม */
 body::before{
   content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(60rem 40rem at 12% -10%, rgba(120,160,255,.16), transparent 60%),
-    radial-gradient(50rem 35rem at 95% 5%, rgba(180,120,255,.13), transparent 60%),
-    radial-gradient(45rem 35rem at 50% 110%, rgba(80,220,190,.10), transparent 60%);
+    radial-gradient(70rem 45rem at 15% -10%, rgba(120,90,190,.26), transparent 62%),
+    radial-gradient(55rem 40rem at 92% 8%, rgba(210,110,180,.20), transparent 62%),
+    linear-gradient(180deg, rgba(9,8,18,.28) 0%, rgba(9,8,18,.46) 45%, rgba(9,8,18,.62) 100%);
 }
 html[data-theme="light"] body::before{
   background:
-    radial-gradient(60rem 40rem at 12% -10%, rgba(90,120,255,.13), transparent 60%),
-    radial-gradient(50rem 35rem at 95% 5%, rgba(160,110,255,.10), transparent 60%),
-    radial-gradient(45rem 35rem at 50% 110%, rgba(40,200,170,.10), transparent 60%);
+    radial-gradient(70rem 45rem at 15% -10%, rgba(255,235,245,.55), transparent 62%),
+    radial-gradient(55rem 40rem at 92% 8%, rgba(235,225,255,.50), transparent 62%),
+    linear-gradient(180deg, rgba(255,252,254,.62) 0%, rgba(255,250,253,.74) 45%, rgba(255,248,252,.86) 100%);
+}
+
+/* --- 2b. รูปพื้นหลังซากุระ ------------------------------- */
+/* ใส่ inset ติดลบ + scale เพื่อไม่ให้ขอบภาพจางออกตอนเบลอ */
+.bg-photo{
+  position:fixed;inset:-4vmax;z-index:-2;pointer-events:none;
+  /* บรรทัดแรกคือตัวสำรองสำหรับเบราว์เซอร์เก่าที่ไม่รู้จัก image-set
+     บรรทัดถัดมาจะทับให้เบราว์เซอร์ใหม่ใช้ webp ที่ไฟล์เล็กกว่า */
+  background-image:url("../assets/sakura-bg.jpg");
+  background-image:-webkit-image-set(url("../assets/sakura-bg.webp") type("image/webp"),
+                                     url("../assets/sakura-bg.jpg") type("image/jpeg"));
+  background-image:image-set(url("../assets/sakura-bg.webp") type("image/webp"),
+                             url("../assets/sakura-bg.jpg") type("image/jpeg"));
+  background-position:center 30%;
+  background-size:cover;
+  background-repeat:no-repeat;
+  filter:blur(7px) saturate(1.08) brightness(.96);
+  transform:scale(1.06);
+  transition:filter .35s ease,opacity .35s ease;
+  will-change:filter;
+}
+/* fallback สำหรับเบราว์เซอร์ที่ไม่รู้จัก image-set — ประกาศไว้ก่อนหน้าแล้ว
+   จึงใช้ .no-imageset ไม่ต้อง เพราะ background-image ตัวแรกคือ url() ปกติ */
+html[data-theme="light"] .bg-photo{
+  filter:blur(9px) saturate(1.1) brightness(1.12);
+}
+@media (max-width:620px){
+  .bg-photo{filter:blur(5px) saturate(1.05) brightness(.8);background-position:62% 30%}
 }
 a{color:inherit}
 
@@ -162,3 +191,122 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:8px 20px 32px
   opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:50;
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ============================================================
+   11. ปรับการ์ดให้อ่านง่ายขึ้นเมื่อมีรูปพื้นหลัง
+   (พื้นหลังเป็นรูปถ่าย การ์ดใสเกินไปจะอ่านยาก เลยทึบขึ้นนิดหน่อย)
+   ============================================================ */
+:root{
+  --card:rgba(18,16,28,.46);
+  --card-brd:rgba(255,255,255,.13);
+  --tile:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  --ring:rgba(255,190,220,.45);
+  --shadow:0 24px 60px -24px rgba(0,0,0,.85);
+}
+html[data-theme="light"]{
+  --card:rgba(255,255,255,.72);
+  --card-brd:rgba(120,80,120,.16);
+  --tile:linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.62));
+  --ring:rgba(220,120,175,.45);
+  --shadow:0 24px 55px -26px rgba(90,40,90,.35);
+}
+.section{backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)}
+.hero h1{text-shadow:0 2px 18px rgba(0,0,0,.45)}
+html[data-theme="light"] .hero h1{text-shadow:0 2px 14px rgba(255,255,255,.7)}
+.hero .logo{box-shadow:0 18px 45px -18px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.12)}
+footer{text-shadow:0 1px 10px rgba(0,0,0,.4)}
+html[data-theme="light"] footer{text-shadow:none}
+
+/* ============================================================
+   12. มินิเกม — ผืนผ้าใบ 3D
+   ============================================================ */
+#critter-canvas{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:40;pointer-events:none;   /* JS จะเปิดรับคลิกเฉพาะตอนเมาส์อยู่บนตัวสัตว์ */
+}
+
+/* ============================================================
+   13. มินิเกม — แผงควบคุม
+   ============================================================ */
+.critter-dock{
+  position:fixed;left:16px;bottom:16px;z-index:60;
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+  font-family:inherit;
+}
+@media (max-width:620px){ .critter-dock{left:12px;right:12px;bottom:12px} }
+
+.critter-fab{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  background:linear-gradient(180deg,rgba(255,150,200,.95),rgba(210,105,175,.95));
+  color:#fff;border:1px solid rgba(255,255,255,.35);
+  border-radius:999px;padding:11px 18px;font:inherit;font-size:14px;font-weight:700;
+  box-shadow:0 12px 30px -10px rgba(200,60,140,.6);
+  transition:transform .16s cubic-bezier(.2,.8,.2,1),box-shadow .2s,filter .2s;
+  align-self:flex-start;
+}
+.critter-fab:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 16px 36px -10px rgba(200,60,140,.75)}
+.critter-fab:active{transform:translateY(0) scale(.98)}
+.critter-fab .paw{font-size:17px;line-height:1}
+.critter-fab.is-disabled{filter:grayscale(.7);opacity:.75}
+.critter-dock.open .critter-fab .paw{animation:pawWiggle 1.4s ease-in-out infinite}
+@keyframes pawWiggle{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+
+.critter-panel{
+  width:min(340px,calc(100vw - 32px));
+  background:var(--card);border:1px solid var(--card-brd);border-radius:20px;
+  backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);
+  box-shadow:var(--shadow);padding:16px;color:var(--fg);
+  animation:critterIn .22s cubic-bezier(.2,.9,.25,1) both;
+}
+@keyframes critterIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+
+.critter-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.critter-title{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.critter-x{
+  background:none;border:none;color:var(--muted);font:inherit;font-size:14px;
+  cursor:pointer;padding:4px 6px;border-radius:8px;line-height:1;
+}
+.critter-x:hover{color:var(--fg);background:rgba(255,255,255,.08)}
+.critter-hint{margin:0 0 12px;font-size:12px;line-height:1.5;color:var(--muted)}
+.critter-error{margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)}
+
+.critter-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
+  max-height:min(46vh,300px);overflow-y:auto;padding-right:4px;margin-bottom:12px;
+  scrollbar-width:thin;
+}
+.critter-grid::-webkit-scrollbar{width:6px}
+.critter-grid::-webkit-scrollbar-thumb{background:var(--card-brd);border-radius:99px}
+
+.critter-pick{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  background:var(--tile);border:1px solid var(--card-brd);border-radius:13px;
+  padding:8px 3px 7px;cursor:pointer;color:var(--fg);font:inherit;
+  transition:transform .15s cubic-bezier(.2,.8,.2,1),border-color .2s,background .2s;
+}
+.critter-pick:hover{transform:translateY(-2px);border-color:var(--ring)}
+.critter-pick:active{transform:translateY(0) scale(.95)}
+.critter-pick:focus-visible{outline:2px solid #ff9dc6;outline-offset:2px}
+.critter-pick .e{font-size:21px;line-height:1.1}
+.critter-pick .n{
+  font-size:9.5px;font-weight:600;color:var(--muted);line-height:1.2;text-align:center;
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.critter-pick.pop{animation:pickPop .26s ease}
+@keyframes pickPop{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}
+
+.critter-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.critter-btn{
+  background:var(--tile);border:1px solid var(--card-brd);color:var(--fg);
+  border-radius:999px;padding:7px 13px;font:inherit;font-size:12px;font-weight:600;
+  cursor:pointer;transition:transform .15s,border-color .2s,background .2s;
+}
+.critter-btn:hover{transform:translateY(-1px);border-color:var(--ring)}
+.critter-btn.danger{color:#ff8fae;border-color:rgba(255,143,174,.35)}
+.critter-btn.danger:hover{background:rgba(255,143,174,.12)}
+.critter-count{margin-left:auto;font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap}
+
+@media (max-width:620px){
+  .critter-panel{width:100%}
+  .critter-grid{grid-template-columns:repeat(5,1fr);max-height:38vh}
+}

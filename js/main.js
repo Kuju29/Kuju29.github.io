@@ -109,6 +109,9 @@
     updateThemeLabel();
 
     localStorage.setItem("kuju_lang", lang);
+
+    // บอกส่วนอื่นๆ ของเว็บ (เช่น มินิเกมใน critters.js) ว่าภาษาเปลี่ยนแล้ว
+    window.dispatchEvent(new CustomEvent("kuju:lang", { detail: { lang: lang } }));
   }
 
   /* --- ธีมมืด / สว่าง ------------------------------------- */
