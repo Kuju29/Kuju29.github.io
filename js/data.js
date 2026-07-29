@@ -105,5 +105,23 @@ const DATA = {
   promptpay: {
     image: "assets/promptpay-card.png",
     downloadName: "kuju-promptpay.png"
+  },
+
+  /* --- ตัวนับผู้เข้าชม (GoatCounter) -------------------------
+     ใส่ "รหัสเว็บ" ที่ได้ตอนสมัคร goatcounter.com ตรงนี้ที่เดียว
+     เช่น ถ้าแดชบอร์ดคุณคือ https://kuju29.goatcounter.com
+     ให้ใส่ code: "kuju29"
+
+     ปล่อยว่างไว้ = ปิดตัวนับทั้งหมด ไม่ยิงขอข้อมูลไปที่ไหนเลย
+
+     อย่าลืมเปิด "Allow adding visitor counts on your website"
+     ในหน้า Settings ของ GoatCounter ด้วย ไม่งั้นตัวเลขจะไม่ขึ้น
+     (ตัวเลขมีแคช ~4 ชั่วโมง เข้าเว็บแล้วเลขยังไม่ขยับถือว่าปกติ)
+     --------------------------------------------------------- */
+  analytics: {
+    goatcounter: {
+      code: "plan291037",
+      showCounter: true      // false = เก็บสถิติเงียบๆ ไม่โชว์เลขบนหน้าเว็บ
+    }
   }
 };

@@ -86,6 +86,8 @@
 <footer>
   <span data-t="thanks"></span><br>
   © <span id="year"></span> KUJU
+  <!-- ตัวนับผู้เข้าชม — ซ่อนไว้จนกว่าจะดึงตัวเลขจริงมาได้ -->
+  <span class="visits" id="visit-count" hidden></span>
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -102,6 +104,7 @@
 <script src="js/data.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
+<script src="js/counter.js" defer></script>
 
 <!-- มินิเกม "สัตว์ป่วนหน้าเว็บ" — โหลดทีหลังสุด ไม่ให้ถ่วงเนื้อหาหลัก
      three.js r128 (MIT) เก็บไว้ในโปรเจกต์เอง ไม่พึ่ง CDN เน็ตล่มก็ยังเล่นได้ -->

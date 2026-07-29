@@ -310,3 +310,13 @@ html[data-theme="light"] footer{text-shadow:none}
   .critter-panel{width:100%}
   .critter-grid{grid-template-columns:repeat(5,1fr);max-height:38vh}
 }
+
+/* ============================================================
+   14. ตัวนับผู้เข้าชม (ท้ายหน้า)
+   ============================================================ */
+.visits{
+  display:block;margin-top:8px;font-size:12px;color:var(--muted);opacity:.85;
+  letter-spacing:.01em;
+}
+.visits::before{content:"👀 ";opacity:.8}
+.visits[hidden]{display:none}
